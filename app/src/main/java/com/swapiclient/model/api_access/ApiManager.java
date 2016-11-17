@@ -1,6 +1,6 @@
 package com.swapiclient.model.api_access;
 
-import com.swapiclient.model.Character;
+import com.swapiclient.model.SwCharacter;
 import com.swapiclient.model.ListApiResponse;
 
 import io.reactivex.Observable;
@@ -14,11 +14,11 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class ApiManager {
 
-    public static Observable<ListApiResponse<Character>> getCharacterListAtPage (int page){
+    public static Observable<ListApiResponse<SwCharacter>> getCharacterListAtPage (int page){
         return wrapper(SwapiClient.getService().getCharactersAtPage(page));
     }
 
-    public static Observable<Character> getCharacterAtId(int id){
+    public static Observable<SwCharacter> getCharacterAtId(int id){
         return wrapper(SwapiClient.getService().getCharacterAtId(id));
     }
 

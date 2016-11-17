@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Jeremy on 17/11/2016.
  */
 
-public class Character implements Parcelable {
+public class SwCharacter implements Parcelable {
 
     //<editor-fold desc="Variables">
     private String name;
@@ -186,10 +186,10 @@ public class Character implements Parcelable {
         dest.writeStringList(this.starships);
     }
 
-    public Character() {
+    public SwCharacter() {
     }
 
-    protected Character(Parcel in) {
+    protected SwCharacter(Parcel in) {
         this.name = in.readString();
         this.height = in.readString();
         this.mass = in.readString();
@@ -208,15 +208,15 @@ public class Character implements Parcelable {
         this.starships = in.createStringArrayList();
     }
 
-    public static final Parcelable.Creator<Character> CREATOR = new Parcelable.Creator<Character>() {
+    public static final Parcelable.Creator<SwCharacter> CREATOR = new Parcelable.Creator<SwCharacter>() {
         @Override
-        public Character createFromParcel(Parcel source) {
-            return new Character(source);
+        public SwCharacter createFromParcel(Parcel source) {
+            return new SwCharacter(source);
         }
 
         @Override
-        public Character[] newArray(int size) {
-            return new Character[size];
+        public SwCharacter[] newArray(int size) {
+            return new SwCharacter[size];
         }
     };
     //</editor-fold>

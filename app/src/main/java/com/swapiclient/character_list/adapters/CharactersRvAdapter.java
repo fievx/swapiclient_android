@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.swapiclient.BR;
 import com.swapiclient.BindingViewHolderImpl;
 import com.swapiclient.R;
+import com.swapiclient.model.SwCharacter;
 
 import java.util.List;
 
@@ -16,9 +17,9 @@ import java.util.List;
  * Created by Jeremy on 16/09/2016.
  */
 public class CharactersRvAdapter extends RecyclerView.Adapter<BindingViewHolderImpl> {
-    List<Character> list;
+    List<SwCharacter> list;
 
-    public CharactersRvAdapter(List<Character> list) {
+    public CharactersRvAdapter(List<SwCharacter> list) {
         this.list = list;
     }
 
@@ -36,7 +37,7 @@ public class CharactersRvAdapter extends RecyclerView.Adapter<BindingViewHolderI
 
     @Override
     public void onBindViewHolder(BindingViewHolderImpl holder, int position) {
-        final Character object = list.get(position);
+        final SwCharacter object = list.get(position);
         holder.getBinding().setVariable(BR.character, object);
         holder.getBinding().executePendingBindings();
     }

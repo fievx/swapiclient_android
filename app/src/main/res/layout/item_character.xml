@@ -4,7 +4,7 @@
     <data>
         <variable
             name="character"
-            type="Character"/>
+            type="com.swapiclient.model.SwCharacter"/>
     </data>
 
     <LinearLayout

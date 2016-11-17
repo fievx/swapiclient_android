@@ -14,7 +14,7 @@ import com.swapiclient.R;
 import com.swapiclient.character_list.CharacterListActivity;
 
 /**
- * An activity representing a single Character detail screen. This
+ * An activity representing a single SwCharacter detail screen. This
  * activity is only used narrow width devices. On tablet-size devices,
  * item details are presented side-by-side with a list of items
  * in a {@link CharacterListActivity}.

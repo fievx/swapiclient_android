@@ -1,10 +1,7 @@
 package com.swapiclient.character_list;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
@@ -12,7 +9,7 @@ import android.widget.FrameLayout;
 import com.swapiclient.BaseActivity;
 import com.swapiclient.character_detail.CharacterDetailActivity;
 import com.swapiclient.R;
-import com.swapiclient.model.Character;
+import com.swapiclient.model.SwCharacter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,7 +45,8 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
         setContentView(R.layout.activity_character_list);
         ButterKnife.bind(this);
 
-        presenter = new
+        presenter = new CharacterListPresenterImpl();
+        presenter.bindView(this);
 
         isTablet = getResources().getBoolean(R.bool.isTablet);
         setSupportActionBar(toolbar);
@@ -60,7 +58,7 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
     }
 
     @Override
-    public void openCharacterDetail(Character character) {
+    public void openCharacterDetail(SwCharacter character) {
 
     }
 }
