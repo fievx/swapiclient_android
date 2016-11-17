@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Swapi client</string>
+    <string name="title_character_detail">Character Detail</string>
+
+    <!--Errors-->
+    <string name="error_title">Error</string>
+    <string name="error_text">An error occurred</string>
+</resources>
