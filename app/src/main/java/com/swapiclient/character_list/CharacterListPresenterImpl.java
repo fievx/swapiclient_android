@@ -27,9 +27,10 @@ public class CharacterListPresenterImpl extends BasePresenter <CharacterListView
                 .subscribe(new Consumer<ListApiResponse<SwCharacter>>() {
                     @Override
                     public void accept(ListApiResponse<SwCharacter> characterListApiResponse) throws Exception {
-                        characterList = characterListApiResponse.getList();
+                        characterList = characterListApiResponse.getResults();
                         if (rvAdapter == null)
                             rvAdapter = new CharactersRvAdapter(characterList);
+                        view.onRvAdapterReady(rvAdapter);
                     }
                 }, new ApiErrorHandler(view){
                     @Override

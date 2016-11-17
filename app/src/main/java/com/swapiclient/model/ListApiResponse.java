@@ -3,7 +3,6 @@ package com.swapiclient.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +15,7 @@ public class ListApiResponse <T extends Parcelable> implements Parcelable {
     private int count;
     private String next;
     private String previous;
-    private List<T> list;
+    private List<T> results;
     //</editor-fold>
 
     //<editor-fold desc="getters - Setters">
@@ -44,12 +43,12 @@ public class ListApiResponse <T extends Parcelable> implements Parcelable {
         this.previous = previous;
     }
 
-    public List<T> getList() {
-        return list;
+    public List<T> getResults() {
+        return results;
     }
 
-    public void setList(List<T> list) {
-        this.list = list;
+    public void setResults(List<T> results) {
+        this.results = results;
     }
 
     //</editor-fold>
@@ -65,7 +64,7 @@ public class ListApiResponse <T extends Parcelable> implements Parcelable {
         dest.writeInt(this.count);
         dest.writeString(this.next);
         dest.writeString(this.previous);
-        dest.writeList(this.list);
+        dest.writeList(this.results);
     }
 
     public ListApiResponse() {
@@ -75,7 +74,7 @@ public class ListApiResponse <T extends Parcelable> implements Parcelable {
         this.count = in.readInt();
         this.next = in.readString();
         this.previous = in.readString();
-        this.list = in.readArrayList(null);
+        this.results = in.readArrayList(null);
     }
 
     public static final Parcelable.Creator<ListApiResponse> CREATOR = new Parcelable.Creator<ListApiResponse>() {

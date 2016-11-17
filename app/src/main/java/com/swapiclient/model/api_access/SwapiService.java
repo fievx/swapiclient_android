@@ -6,6 +6,7 @@ import com.swapiclient.model.ListApiResponse;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Jeremy on 17/11/2016.
@@ -13,8 +14,8 @@ import retrofit2.http.Path;
 
 public interface SwapiService {
 
-    @GET ("people/?page={page_number}")
-    Observable<ListApiResponse<SwCharacter>> getCharactersAtPage(@Path("page_number")int pageNumber);
+    @GET ("people/")
+    Observable<ListApiResponse<SwCharacter>> getCharactersAtPage(@Query("pagex") int pageNumber);
 
     @GET ("people/{character_id]")
     Observable<SwCharacter> getCharacterAtId(@Path("character_id") int id);

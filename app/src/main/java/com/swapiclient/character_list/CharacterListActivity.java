@@ -35,7 +35,7 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device.
+     * device. The value is determined using the bool xml value.
      */
     private boolean isTablet;
 
@@ -50,6 +50,8 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
 
         isTablet = getResources().getBoolean(R.bool.isTablet);
         setSupportActionBar(toolbar);
+
+        presenter.loadNextPage();
     }
 
     @Override
