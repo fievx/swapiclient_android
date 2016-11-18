@@ -20,7 +20,8 @@ import io.reactivex.functions.Consumer;
  * Created by Jeremy on 17/11/2016.
  */
 
-class CharacterListPresenterImpl extends BasePresenter <CharacterListView> implements CharacterListPresenter {
+class CharacterListPresenterImpl extends BasePresenter <CharacterListView> implements CharacterListPresenter,
+        CharactersRvAdapter.OnSwCharacterClickListener{
     private static final String CHARACTER_LIST = "CHARACTER_LIST";
     private static final String CURRENT_PAGE = "CURRENT_PAGE";
     private static final String LAST_PAGE_LOADED = "LAST_PAGE_LOADED";
@@ -39,8 +40,7 @@ class CharacterListPresenterImpl extends BasePresenter <CharacterListView> imple
             currentPage = savedInstanceState.getInt(CURRENT_PAGE);
             lastPageLoaded = savedInstanceState.getBoolean(LAST_PAGE_LOADED);
 
-            rvAdapter = new CharactersRvAdapter(characterList);
-            view.onRvAdapterReady(rvAdapter);
+            prepareRvAdapter();
         }else{
             loadNextPage();
         }
@@ -72,8 +72,7 @@ class CharacterListPresenterImpl extends BasePresenter <CharacterListView> imple
 
                             //create adapter or add new elements to list
                             if (rvAdapter == null) {
-                                rvAdapter = new CharactersRvAdapter(characterList);
-                                view.onRvAdapterReady(rvAdapter);
+                                prepareRvAdapter();
                             }
                             else {
                                 final int additionStart = characterList.size() - characterListApiResponse.getResults().size();
@@ -90,4 +89,14 @@ class CharacterListPresenterImpl extends BasePresenter <CharacterListView> imple
         }
     }
 
+    private void prepareRvAdapter(){
+        rvAdapter = new CharactersRvAdapter(characterList);
+        view.onRvAdapterReady(rvAdapter);
+        rvAdapter.setListener(this);
+    }
+
+    @Override
+    public void onSwCharacterClicked(SwCharacter character) {
+        view.openCharacterDetail(character);
+    }
 }

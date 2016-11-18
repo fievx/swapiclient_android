@@ -1,34 +1,58 @@
 package com.swapiclient.character_detail;
 
-import android.app.Activity;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.swapiclient.BaseFragment;
 import com.swapiclient.R;
-import com.swapiclient.character_list.CharacterListActivity;
+import com.swapiclient.custom_views.KeyValueView;
+import com.swapiclient.databinding.FragmentCharacterDetailBinding;
+import com.swapiclient.model.SwCharacter;
+import com.swapiclient.model.SwElement;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * A fragment representing a single SwCharacter detail screen.
- * This fragment is either contained in a {@link CharacterListActivity}
- * in two-pane mode (on tablets) or a {@link CharacterDetailActivity}
- * on handsets.
  */
-public class CharacterDetailFragment extends Fragment {
-    /**
-     * The fragment argument representing the item ID that this fragment
-     * represents.
-     */
-    public static final String ARG_ITEM_ID = "item_id";
+public class CharacterDetailFragment extends BaseFragment implements CharacterDetailView {
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
+    //<editor-fold desc="Binds">
+    @BindView(R.id.ll_vehicles)
+    LinearLayout llVehicles;
+    @BindView(R.id.ll_starships)
+    LinearLayout llStarships;
+    @BindView(R.id.ll_films)
+    LinearLayout llFilms;
+    @BindView(R.id.kv_homeworld)
+    KeyValueView kvHomeworld;
+    @BindView(R.id.kv_specie)
+    KeyValueView kvSpecie;
+    //</editor-fold>
+
+    private static final String CHARACTER = "CHARACTER";
+
+
+    private SwCharacter character;
+    private Unbinder unbinder;
+
+    public static CharacterDetailFragment getInstance(SwCharacter character){
+        CharacterDetailFragment fragment = new CharacterDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(CHARACTER, character);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
     public CharacterDetailFragment() {
     }
 
@@ -36,13 +60,69 @@ public class CharacterDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (savedInstanceState!=null){
+            character = savedInstanceState.getParcelable(CHARACTER);
+        }else {
+            character = getArguments().getParcelable(CHARACTER);
+        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.character_detail, container, false);
+        //We rely on Databinding to populate most of the windgets
+        FragmentCharacterDetailBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_character_detail, container, false);
+        binding.setCharacter(character);
+        
+        View rootView = binding.getRoot();
+        unbinder = ButterKnife.bind(this, rootView);
 
         return rootView;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(CHARACTER, character);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void mapFilms(List<SwElement> elementList) {
+        mapList(llFilms, elementList);
+    }
+
+    @Override
+    public void mapVehicles(List<SwElement> vehicles) {
+        mapList(llVehicles, vehicles);
+    }
+
+    @Override
+    public void mapSpaceships(List<SwElement> spaceships) {
+        mapList(llStarships, spaceships);
+    }
+
+    private void mapList(LinearLayout layout, List<SwElement> elementList) {
+        for (SwElement swElement : elementList) {
+            final TextView textView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_basic_text, null);
+            textView.setText(swElement.getDisplayableName());
+            layout.addView(textView);
+        }
+    }
+
+    @Override
+    public void mapHomeworld(SwElement homeworld) {
+        kvHomeworld.setValue(homeworld.getDisplayableName());
+    }
+
+    @Override
+    public void mapSpecie(SwElement specie) {
+        kvSpecie.setValue(specie.getDisplayableName());
     }
 }

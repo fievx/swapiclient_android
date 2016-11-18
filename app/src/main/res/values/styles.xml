@@ -17,4 +17,31 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="TextView" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+
+    </style>
+
+    <style name="KeyValue">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/list_item_height</item>
+        <item name="android:layout_marginTop">@dimen/margin_content_areas_spacing</item>
+    </style>
+
+    <style name="LinearLayout_as_list">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:showDividers">middle</item>
+        <item name="android:divider">@drawable/divider_dark</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="LabelledDivider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_content_areas_spacing</item>
+    </style>
+
 </resources>

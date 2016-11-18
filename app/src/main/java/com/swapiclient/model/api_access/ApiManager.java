@@ -2,6 +2,7 @@ package com.swapiclient.model.api_access;
 
 import com.swapiclient.model.SwCharacter;
 import com.swapiclient.model.ListApiResponse;
+import com.swapiclient.model.SwGenericElement;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -20,6 +21,10 @@ public class ApiManager {
 
     public static Observable<SwCharacter> getCharacterAtId(int id){
         return wrapper(SwapiClient.getService().getCharacterAtId(id));
+    }
+
+    public static Observable<SwGenericElement> getGenericElement(String url){
+        return wrapper(SwapiClient.getGenericService().getGenericElement(url));
     }
 
     /**

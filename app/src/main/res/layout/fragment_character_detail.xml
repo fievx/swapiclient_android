@@ -1,0 +1,114 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="character"
+            type="com.swapiclient.model.SwCharacter"/>
+    </data>
+
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background"
+        android:clickable="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/margin_activity_border"
+            android:layout_marginRight="@dimen/margin_activity_border">
+
+            <com.swapiclient.custom_views.KeyValueView
+                style="@style/KeyValue"
+                app:key="Name"
+                app:value="@{character.name}"
+                />
+
+            <com.swapiclient.custom_views.KeyValueView
+                style="@style/KeyValue"
+                app:key="Height"
+                app:value="@{character.height}"
+                />
+
+            <com.swapiclient.custom_views.KeyValueView
+                style="@style/KeyValue"
+                app:key="Mass"
+                app:value="@{character.mass}"
+                />
+
+            <com.swapiclient.custom_views.KeyValueView
+                style="@style/KeyValue"
+                app:key="Hair Color"
+                app:value="@{character.hair_color}"
+                />
+
+            <com.swapiclient.custom_views.KeyValueView
+                style="@style/KeyValue"
+                app:key="Skin Color"
+                app:value="@{character.skin_color}"
+                />
+
+            <com.swapiclient.custom_views.KeyValueView
+                style="@style/KeyValue"
+                app:key="Eyes Color"
+                app:value="@{character.eye_color}"
+                />
+
+            <com.swapiclient.custom_views.KeyValueView
+                style="@style/KeyValue"
+                app:key="Birth Year"
+                app:value="@{character.birth_year}"
+                />
+
+            <com.swapiclient.custom_views.KeyValueView
+                style="@style/KeyValue"
+                app:key="Gender"
+                app:value="@{character.gender}"
+                />
+
+            <com.swapiclient.custom_views.KeyValueView
+                style="@style/KeyValue"
+                app:key="Homeworld"
+                android:id="@+id/kv_homeworld"
+                />
+
+            <com.swapiclient.custom_views.KeyValueView
+                style="@style/KeyValue"
+                app:key="Specie"
+                android:id="@+id/kv_specie"
+                />
+
+            <com.swapiclient.custom_views.LabelledDivider
+                style="@style/LabelledDivider"
+                app:label="Vehicles"
+                />
+
+            <LinearLayout
+                style="@style/LinearLayout_as_list"
+                android:id="@+id/ll_vehicles"/>
+
+            <com.swapiclient.custom_views.LabelledDivider
+                style="@style/LabelledDivider"
+                app:label="Starships"
+                />
+
+            <LinearLayout
+                style="@style/LinearLayout_as_list"
+                android:id="@+id/ll_starships"/>
+
+            <com.swapiclient.custom_views.LabelledDivider
+                style="@style/LabelledDivider"
+                app:label="Films"
+                />
+
+            <LinearLayout
+                style="@style/LinearLayout_as_list"
+                android:id="@+id/ll_films"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</layout>
+

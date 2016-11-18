@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout  xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -7,25 +8,38 @@
             type="com.swapiclient.model.SwCharacter"/>
     </data>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        card_view:cardCornerRadius="4dp"
+        card_view:cardUseCompatPadding="true"
+        android:clickable="true">
 
-        <TextView
-            android:id="@+id/tv_name"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem"
-            android:text="@{character.name}"/>
+            android:background="?attr/selectableItemBackground">
 
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem"
-            android:text="@{character.gender}"/>
-    </LinearLayout>
+            <TextView
+                android:id="@+id/gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:layout_alignParentRight="true"
+                android:text="@{character.gender}" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/gender"
+                android:layout_alignParentLeft="true"
+                android:layout_margin="@dimen/text_margin"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:text="@{character.name}" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
 </layout>

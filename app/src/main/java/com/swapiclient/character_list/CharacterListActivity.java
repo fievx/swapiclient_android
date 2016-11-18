@@ -2,14 +2,16 @@ package com.swapiclient.character_list;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 
 import com.swapiclient.BaseActivity;
-import com.swapiclient.character_detail.CharacterDetailActivity;
+
 import com.swapiclient.R;
+import com.swapiclient.character_detail.CharacterDetailFragment;
 import com.swapiclient.model.SwCharacter;
 import com.utils.rv_utils.EndlessRecyclerOnScrollListener;
 
@@ -18,11 +20,7 @@ import butterknife.ButterKnife;
 
 /**
  * An activity representing a list of Characters. This activity
- * has different presentations for handset and tablet-size devices. On
- * handsets, the activity presents a list of items, which when touched,
- * lead to a {@link CharacterDetailActivity} representing
- * item details. On tablets, the activity presents the list of items and
- * item details side-by-side using two vertical panes.
+ * has different presentations for handset and tablet-size devices.
  */
 public class CharacterListActivity extends BaseActivity <CharacterListPresenter> implements CharacterListView {
 
@@ -35,11 +33,7 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
     @BindView(R.id.frameLayout)
     FrameLayout frameLayout;
 
-    /**
-     * Whether or not the activity is in two-pane mode, i.e. running on a tablet
-     * device. The value is determined using the bool xml value.
-     */
-    private boolean isTablet;
+    private static final String FRAGMENT_DETAIL = "FRAGMENT_DETAIL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +45,6 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
         presenter.bindView(this);
         presenter.onCreate(savedInstanceState);
 
-        isTablet = getResources().getBoolean(R.bool.isTablet);
         setSupportActionBar(toolbar);
     }
 
@@ -70,6 +63,13 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
 
     @Override
     public void openCharacterDetail(SwCharacter character) {
-
+        CharacterDetailFragment fragment = CharacterDetailFragment.getInstance(character);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        if (!isTablet){
+            transaction.setCustomAnimations(com.utils.R.anim.enter_from_right, 0, 0, com.utils.R.anim.exit_to_right);
+        }
+        transaction.add(R.id.character_detail_container, fragment, FRAGMENT_DETAIL);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 }

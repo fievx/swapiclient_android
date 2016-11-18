@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Jeremy on 17/11/2016.
  */
 
-public class SwCharacter implements Parcelable {
+public class SwCharacter implements Parcelable, SwElement {
 
     //<editor-fold desc="Variables">
     private String name;
@@ -220,4 +220,10 @@ public class SwCharacter implements Parcelable {
         }
     };
     //</editor-fold>
+
+
+    @Override
+    public String getDisplayableName() {
+        return name;
+    }
 }

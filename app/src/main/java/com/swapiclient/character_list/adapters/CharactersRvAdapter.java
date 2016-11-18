@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.swapiclient.BR;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 public class CharactersRvAdapter extends RecyclerView.Adapter<BindingViewHolderImpl> {
     List<SwCharacter> list;
+    OnSwCharacterClickListener listener;
 
     public CharactersRvAdapter(List<SwCharacter> list) {
         this.list = list;
@@ -42,9 +44,25 @@ public class CharactersRvAdapter extends RecyclerView.Adapter<BindingViewHolderI
         holder.getBinding().executePendingBindings();
     }
 
-    public class CharacterViewHolder extends BindingViewHolderImpl {
+    public class CharacterViewHolder extends BindingViewHolderImpl implements View.OnClickListener {
         public CharacterViewHolder(ViewDataBinding dataBinding) {
             super(dataBinding);
+            dataBinding.getRoot().setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view) {
+            if (listener!=null){
+                listener.onSwCharacterClicked(list.get(getAdapterPosition()));
+            }
+        }
+    }
+
+    public void setListener(OnSwCharacterClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnSwCharacterClickListener{
+        void onSwCharacterClicked(SwCharacter character);
     }
 }
