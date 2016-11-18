@@ -8,5 +8,5 @@ import com.mvpbase.presenters.ActivityPresenter;
 
 public interface CharacterListPresenter extends ActivityPresenter <CharacterListView> {
 
-    void loadNextPage();
+    void    loadNextPage();
 }

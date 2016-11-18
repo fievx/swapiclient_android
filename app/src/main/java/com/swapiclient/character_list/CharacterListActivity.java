@@ -2,6 +2,7 @@ package com.swapiclient.character_list;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
@@ -10,6 +11,7 @@ import com.swapiclient.BaseActivity;
 import com.swapiclient.character_detail.CharacterDetailActivity;
 import com.swapiclient.R;
 import com.swapiclient.model.SwCharacter;
+import com.utils.rv_utils.EndlessRecyclerOnScrollListener;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,16 +49,23 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
 
         presenter = new CharacterListPresenterImpl();
         presenter.bindView(this);
+        presenter.onCreate(savedInstanceState);
 
         isTablet = getResources().getBoolean(R.bool.isTablet);
         setSupportActionBar(toolbar);
-
-        presenter.loadNextPage();
     }
 
     @Override
     public void onRvAdapterReady(RecyclerView.Adapter adapter) {
         rvCharacters.setAdapter(adapter);
+
+        //we attach a scroll listener to enable infinite scrolling
+        rvCharacters.addOnScrollListener(new EndlessRecyclerOnScrollListener((LinearLayoutManager) rvCharacters.getLayoutManager(), 10) {
+            @Override
+            public void onLoadMore(int current_page) {
+                presenter.loadNextPage();
+            }
+        });
     }
 
     @Override

@@ -15,7 +15,7 @@ import retrofit2.http.Query;
 public interface SwapiService {
 
     @GET ("people/")
-    Observable<ListApiResponse<SwCharacter>> getCharactersAtPage(@Query("pagex") int pageNumber);
+    Observable<ListApiResponse<SwCharacter>> getCharactersAtPage(@Query("page") int pageNumber);
 
     @GET ("people/{character_id]")
     Observable<SwCharacter> getCharacterAtId(@Path("character_id") int id);
