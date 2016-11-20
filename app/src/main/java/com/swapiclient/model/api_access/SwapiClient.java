@@ -25,9 +25,9 @@ public class SwapiClient {
     public SwapiClient() {
     }
 
-    private static HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+    private HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
 
-    private static OkHttpClient okHttpClient = new OkHttpClient.Builder()
+    private OkHttpClient okHttpClient = new OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .build();
 
@@ -50,9 +50,10 @@ public class SwapiClient {
      * Create a generic Service that can be used to pass any url and get back any SwGenericElement
      * @return
      */
-    private GenericService getGenericService(){
+    private GenericService getGenericService(String url){
         return new Retrofit.Builder()
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build().create(GenericService.class);
@@ -72,8 +73,20 @@ public class SwapiClient {
         return wrapper(getService().getCharacterAtId(id));
     }
 
+    /**
+     * This method will call any passed url retrieved from the Character Json object in order to
+     * retrieve the films, species... which are stored as urls in the swCharacter Object
+     * @param url
+     * @return
+     */
     public Observable<SwGenericElement> getGenericElement(String url){
-        return wrapper(getGenericService().getGenericElement(url));
+        //we need to split the url at a "/" to pass it as base url and parameter
+        //the easiest way is to cut just after the api word
+        int positionApi = url.indexOf("api/")+4;
+        String base = url.substring(0, positionApi);
+        String param = url.substring(positionApi, url.length());
+
+        return wrapper(getGenericService(base).getGenericElement(url));
     }
 
     /**

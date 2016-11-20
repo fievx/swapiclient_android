@@ -14,6 +14,7 @@ import com.swapiclient.custom_views.KeyValueView;
 import com.swapiclient.databinding.FragmentCharacterDetailBinding;
 import com.swapiclient.model.SwCharacter;
 import com.swapiclient.model.SwElement;
+import com.swapiclient.model.SwGenericElement;
 
 import java.util.List;
 
@@ -41,7 +42,6 @@ public class CharacterDetailFragment extends BaseFragment implements CharacterDe
 
     private static final String CHARACTER = "CHARACTER";
 
-
     private SwCharacter character;
     private Unbinder unbinder;
 
@@ -66,6 +66,9 @@ public class CharacterDetailFragment extends BaseFragment implements CharacterDe
             character = getArguments().getParcelable(CHARACTER);
         }
 
+        presenter = new CharacterDetailPresenterImpl(character);
+        presenter.bindView(this);
+        presenter.onCreate(savedInstanceState);
     }
 
     @Override
@@ -94,21 +97,15 @@ public class CharacterDetailFragment extends BaseFragment implements CharacterDe
     }
 
     @Override
-    public void mapFilms(List<SwElement> elementList) {
-        mapList(llFilms, elementList);
+    public void mapFullCharacter(SwCharacter character) {
+        mapList(llStarships, character.getStarshipsElement());
+        mapList(llVehicles, character.getVehiclesElement());
+        mapList(llFilms, character.getFilmsElement());
+        kvHomeworld.setValue(character.getHomeworldElement().getDisplayableName());
+        kvSpecie.setValue(character.getSpeciesElement().get(0).getDisplayableName());
     }
 
-    @Override
-    public void mapVehicles(List<SwElement> vehicles) {
-        mapList(llVehicles, vehicles);
-    }
-
-    @Override
-    public void mapSpaceships(List<SwElement> spaceships) {
-        mapList(llStarships, spaceships);
-    }
-
-    private void mapList(LinearLayout layout, List<SwElement> elementList) {
+    private void mapList(LinearLayout layout, List<SwGenericElement> elementList) {
         for (SwElement swElement : elementList) {
             final TextView textView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_basic_text, null);
             textView.setText(swElement.getDisplayableName());
@@ -116,12 +113,10 @@ public class CharacterDetailFragment extends BaseFragment implements CharacterDe
         }
     }
 
-    @Override
     public void mapHomeworld(SwElement homeworld) {
         kvHomeworld.setValue(homeworld.getDisplayableName());
     }
 
-    @Override
     public void mapSpecie(SwElement specie) {
         kvSpecie.setValue(specie.getDisplayableName());
     }

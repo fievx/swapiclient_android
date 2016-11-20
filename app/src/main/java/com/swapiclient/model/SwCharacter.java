@@ -3,6 +3,8 @@ package com.swapiclient.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -20,17 +22,33 @@ public class SwCharacter implements Parcelable, SwElement {
     private String eye_color;
     private String birth_year;
     private String gender;
-    private String homeworld;
+    @SerializedName("homeworld") private String homeworldUrl;
+    private SwGenericElement homeworldElement;
     private String created;
     private String edited;
     private String url;
-    private List<String> films;
-    private List<String> species;
-    private List<String> vehicles;
-    private List<String> starships;
+    @SerializedName("films")
+    private List<String> filmUrls;
+    @SerializedName("species")
+    private List<String> speciesUrls;
+    @SerializedName("vehicles")
+    private List<String> vehiclesUrls;
+    @SerializedName("starships")
+    private List<String> starshipsUrls;
+    private List<SwGenericElement> filmsElement, speciesElement, vehiclesElement, starshipsElement;
     //</editor-fold>
 
     //<editor-fold desc="Getters - Setters">
+
+
+    public SwGenericElement getHomeworldElement() {
+        return homeworldElement;
+    }
+
+    public void setHomeworldElement(SwGenericElement homeworldElement) {
+        this.homeworldElement = homeworldElement;
+    }
+
     public String getName() {
         return name;
     }
@@ -95,12 +113,12 @@ public class SwCharacter implements Parcelable, SwElement {
         this.gender = gender;
     }
 
-    public String getHomeworld() {
-        return homeworld;
+    public String getHomeworldUrl() {
+        return homeworldUrl;
     }
 
-    public void setHomeworld(String homeworld) {
-        this.homeworld = homeworld;
+    public void setHomeworldUrl(String homeworldUrl) {
+        this.homeworldUrl = homeworldUrl;
     }
 
     public String getCreated() {
@@ -127,40 +145,82 @@ public class SwCharacter implements Parcelable, SwElement {
         this.url = url;
     }
 
-    public List<String> getFilms() {
-        return films;
+    public List<String> getFilmUrls() {
+        return filmUrls;
     }
 
-    public void setFilms(List<String> films) {
-        this.films = films;
+    public void setFilmUrls(List<String> filmUrls) {
+        this.filmUrls = filmUrls;
     }
 
-    public List<String> getSpecies() {
-        return species;
+    public List<String> getSpeciesUrls() {
+        return speciesUrls;
     }
 
-    public void setSpecies(List<String> species) {
-        this.species = species;
+    public void setSpeciesUrls(List<String> speciesUrls) {
+        this.speciesUrls = speciesUrls;
     }
 
-    public List<String> getVehicles() {
-        return vehicles;
+    public List<String> getVehiclesUrls() {
+        return vehiclesUrls;
     }
 
-    public void setVehicles(List<String> vehicles) {
-        this.vehicles = vehicles;
+    public void setVehiclesUrls(List<String> vehiclesUrls) {
+        this.vehiclesUrls = vehiclesUrls;
     }
 
-    public List<String> getStarships() {
-        return starships;
+    public List<String> getStarshipsUrls() {
+        return starshipsUrls;
     }
 
-    public void setStarships(List<String> starships) {
-        this.starships = starships;
+    public void setStarshipsUrls(List<String> starshipsUrls) {
+        this.starshipsUrls = starshipsUrls;
     }
+
+    public List<SwGenericElement> getFilmsElement() {
+        return filmsElement;
+    }
+
+    public void setFilmsElement(List<SwGenericElement> filmsElement) {
+        this.filmsElement = filmsElement;
+    }
+
+    public List<SwGenericElement> getSpeciesElement() {
+        return speciesElement;
+    }
+
+    public void setSpeciesElement(List<SwGenericElement> speciesElement) {
+        this.speciesElement = speciesElement;
+    }
+
+    public List<SwGenericElement> getStarshipsElement() {
+        return starshipsElement;
+    }
+
+    public void setStarshipsElement(List<SwGenericElement> starshipsElement) {
+        this.starshipsElement = starshipsElement;
+    }
+
+    public List<SwGenericElement> getVehiclesElement() {
+        return vehiclesElement;
+    }
+
+    public void setVehiclesElement(List<SwGenericElement> vehiclesElement) {
+        this.vehiclesElement = vehiclesElement;
+    }
+
     //</editor-fold>
 
-    //<editor-fold desc="Parcelable implementation">
+    public SwCharacter() {
+    }
+
+    @Override
+    public String getDisplayableName() {
+        return name;
+    }
+
+    //<editor-fold desc="Parcelable impl">
+
     @Override
     public int describeContents() {
         return 0;
@@ -176,17 +236,19 @@ public class SwCharacter implements Parcelable, SwElement {
         dest.writeString(this.eye_color);
         dest.writeString(this.birth_year);
         dest.writeString(this.gender);
-        dest.writeString(this.homeworld);
+        dest.writeString(this.homeworldUrl);
+        dest.writeParcelable(this.homeworldElement, flags);
         dest.writeString(this.created);
         dest.writeString(this.edited);
         dest.writeString(this.url);
-        dest.writeStringList(this.films);
-        dest.writeStringList(this.species);
-        dest.writeStringList(this.vehicles);
-        dest.writeStringList(this.starships);
-    }
-
-    public SwCharacter() {
+        dest.writeStringList(this.filmUrls);
+        dest.writeStringList(this.speciesUrls);
+        dest.writeStringList(this.vehiclesUrls);
+        dest.writeStringList(this.starshipsUrls);
+        dest.writeTypedList(this.filmsElement);
+        dest.writeTypedList(this.speciesElement);
+        dest.writeTypedList(this.vehiclesElement);
+        dest.writeTypedList(this.starshipsElement);
     }
 
     protected SwCharacter(Parcel in) {
@@ -198,17 +260,22 @@ public class SwCharacter implements Parcelable, SwElement {
         this.eye_color = in.readString();
         this.birth_year = in.readString();
         this.gender = in.readString();
-        this.homeworld = in.readString();
+        this.homeworldUrl = in.readString();
+        this.homeworldElement = in.readParcelable(SwGenericElement.class.getClassLoader());
         this.created = in.readString();
         this.edited = in.readString();
         this.url = in.readString();
-        this.films = in.createStringArrayList();
-        this.species = in.createStringArrayList();
-        this.vehicles = in.createStringArrayList();
-        this.starships = in.createStringArrayList();
+        this.filmUrls = in.createStringArrayList();
+        this.speciesUrls = in.createStringArrayList();
+        this.vehiclesUrls = in.createStringArrayList();
+        this.starshipsUrls = in.createStringArrayList();
+        this.filmsElement = in.createTypedArrayList(SwGenericElement.CREATOR);
+        this.speciesElement = in.createTypedArrayList(SwGenericElement.CREATOR);
+        this.vehiclesElement = in.createTypedArrayList(SwGenericElement.CREATOR);
+        this.starshipsElement = in.createTypedArrayList(SwGenericElement.CREATOR);
     }
 
-    public static final Parcelable.Creator<SwCharacter> CREATOR = new Parcelable.Creator<SwCharacter>() {
+    public static final Creator<SwCharacter> CREATOR = new Creator<SwCharacter>() {
         @Override
         public SwCharacter createFromParcel(Parcel source) {
             return new SwCharacter(source);
@@ -220,10 +287,4 @@ public class SwCharacter implements Parcelable, SwElement {
         }
     };
     //</editor-fold>
-
-
-    @Override
-    public String getDisplayableName() {
-        return name;
-    }
 }

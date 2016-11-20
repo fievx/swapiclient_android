@@ -8,12 +8,10 @@ import com.swapiclient.character_list.adapters.CharactersRvAdapter;
 import com.swapiclient.model.SwCharacter;
 import com.swapiclient.model.ListApiResponse;
 import com.swapiclient.model.api_access.ApiErrorHandler;
-import com.swapiclient.model.api_access.ApiManager;
 import com.swapiclient.model.api_access.SwapiClient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import io.reactivex.functions.Consumer;
 

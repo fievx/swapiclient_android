@@ -1,7 +1,9 @@
 package com.swapiclient.character_detail;
 
 import com.mvpbase.views.ActivityView;
+import com.swapiclient.model.SwCharacter;
 import com.swapiclient.model.SwElement;
+import com.swapiclient.model.SwGenericElement;
 
 import java.util.List;
 
@@ -11,9 +13,5 @@ import java.util.List;
 
 public interface CharacterDetailView extends ActivityView {
 
-    void mapFilms(List<SwElement> elementList);
-    void mapVehicles (List<SwElement> vehicles);
-    void mapSpaceships(List<SwElement> spaceships);
-    void mapHomeworld (SwElement homeworld);
-    void mapSpecie (SwElement specie);
+    void mapFullCharacter(SwCharacter character);
 }
