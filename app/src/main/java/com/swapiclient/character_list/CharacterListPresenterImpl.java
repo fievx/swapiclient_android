@@ -9,6 +9,7 @@ import com.swapiclient.model.SwCharacter;
 import com.swapiclient.model.ListApiResponse;
 import com.swapiclient.model.api_access.ApiErrorHandler;
 import com.swapiclient.model.api_access.ApiManager;
+import com.swapiclient.model.api_access.SwapiClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,7 +59,7 @@ class CharacterListPresenterImpl extends BasePresenter <CharacterListView> imple
     public void loadNextPage() {
         if (!lastPageLoaded) { //Load another page only if we are not already on the last one
             currentPage++;
-            ApiManager.getCharacterListAtPage(currentPage)
+            new SwapiClient().getCharacterListAtPage(currentPage)
                     .subscribe(new Consumer<ListApiResponse<SwCharacter>>() {
                         @Override
                         public void accept(ListApiResponse<SwCharacter> characterListApiResponse) throws Exception {

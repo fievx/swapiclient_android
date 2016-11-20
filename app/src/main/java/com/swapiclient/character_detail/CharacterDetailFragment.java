@@ -74,7 +74,7 @@ public class CharacterDetailFragment extends BaseFragment implements CharacterDe
         //We rely on Databinding to populate most of the windgets
         FragmentCharacterDetailBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_character_detail, container, false);
         binding.setCharacter(character);
-        
+
         View rootView = binding.getRoot();
         unbinder = ButterKnife.bind(this, rootView);
 
