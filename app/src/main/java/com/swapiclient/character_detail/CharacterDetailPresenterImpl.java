@@ -14,7 +14,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
-import io.reactivex.functions.Function5;
 
 /**
  * Created by Jeremy on 20/11/2016.
@@ -52,39 +51,51 @@ public class CharacterDetailPresenterImpl extends BasePresenter <CharacterDetail
 
     /**
      * this is the method where we merge all the api calls into the existing SwCharacter before displaying it.
-     * in this method, it is important to respect the order in which we zip each call because the same
-     * order is the output and the names don't provide much information.
      */
     private void fetchAllDetails(){
-        SwapiClient client = new SwapiClient();
+        //We add to the list of methods to call only those really needed to avoid fails while fetching items
+        //if we try to fetch elements that the character does not have, the Api fails.
+        final List<List<String>> fetchableLists = characterBasic.getAllFetchableList();
+        List<Observable<List<SwGenericElement>>> observableList = new ArrayList<>();
+        for (List<String> fetchableList : fetchableLists) {
+            observableList.add(fetchAllListElements(fetchableList));
+        }
+
+        /**
+         * We create a zip of all the list of fetchable items. we get them back as an array of objects
+         * and save them all as the combined list of all generique elements. The View should know how
+         * to handle this combine List.
+         */
         Observable.zip(
-                fetchAllListElements(characterBasic.getFilmUrls()),
-                fetchAllListElements(characterBasic.getSpeciesUrls()),
-                fetchAllListElements(characterBasic.getVehiclesUrls()),
-                fetchAllListElements(characterBasic.getStarshipsUrls()),
-                client.getGenericElement(characterBasic.getHomeworldUrl()),
-                new Function5<List<SwGenericElement>, List<SwGenericElement>, List<SwGenericElement>, List<SwGenericElement>, SwGenericElement, SwCharacter>() {
+                observableList,
+                new Function<Object[], List<List<SwGenericElement>>> () {
                     @Override
-                    public SwCharacter apply(List<SwGenericElement> swGenericElements, List<SwGenericElement> swGenericElements2, List<SwGenericElement> swGenericElements3, List<SwGenericElement> swGenericElements4, SwGenericElement swGenericElement) throws Exception {
-                        final SwCharacter character = new SwCharacter();
-                        character.setFilmsElement(swGenericElements);
-                        character.setSpeciesElement(swGenericElements2);
-                        character.setVehiclesElement(swGenericElements3);
-                        character.setStarshipsElement(swGenericElements4);
-                        character.setHomeworldElement(swGenericElement);
-                        return character;
+                    public List<List<SwGenericElement>> apply(Object[] objects) throws Exception {
+                        List<List<SwGenericElement>> combinedList = new ArrayList<>();
+                        for (Object object : objects) {
+                            if (object instanceof ArrayList){
+                                combinedList.add((ArrayList)object);
+                            }
+                        }
+                        return combinedList;
                     }
                 }
-        ).subscribe(new Consumer<SwCharacter>() {
+        ).subscribe(new Consumer<List<List<SwGenericElement>>>() {
             @Override
-            public void accept(SwCharacter character) throws Exception {
-                characterComplete = character;
-                view.mapFullCharacter(characterComplete);
-
+            public void accept(List<List<SwGenericElement>> combinedList) throws Exception {
+                view.mapCombinedList(combinedList);
+                if (characterComplete==null)
+                    characterComplete = new SwCharacter();
+                characterComplete.setCombineList(combinedList);
             }
         }, new ApiErrorHandler(view));
     }
 
+    /**
+     * We create a list of all elements to fetch and call parallel api calls on them.
+     * @param urls
+     * @return
+     */
     public Observable<List<SwGenericElement>> fetchAllListElements(List<String> urls){
         SwapiClient client = new SwapiClient();
         List <Observable<SwGenericElement>> observables = new ArrayList<>();

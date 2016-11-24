@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.swapiclient.BaseFragment;
 import com.swapiclient.R;
+import com.swapiclient.custom_views.GenericElementsList;
 import com.swapiclient.custom_views.KeyValueView;
 import com.swapiclient.databinding.FragmentCharacterDetailBinding;
 import com.swapiclient.model.SwCharacter;
@@ -28,16 +29,11 @@ import butterknife.Unbinder;
 public class CharacterDetailFragment extends BaseFragment implements CharacterDetailView {
 
     //<editor-fold desc="Binds">
-    @BindView(R.id.ll_vehicles)
-    LinearLayout llVehicles;
-    @BindView(R.id.ll_starships)
-    LinearLayout llStarships;
-    @BindView(R.id.ll_films)
     LinearLayout llFilms;
     @BindView(R.id.kv_homeworld)
     KeyValueView kvHomeworld;
-    @BindView(R.id.kv_specie)
-    KeyValueView kvSpecie;
+    @BindView(R.id.ll_main)
+    LinearLayout llMain;
     //</editor-fold>
 
     private static final String CHARACTER = "CHARACTER";
@@ -74,7 +70,7 @@ public class CharacterDetailFragment extends BaseFragment implements CharacterDe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //We rely on Databinding to populate most of the windgets
+        //We rely on Databinding to populate most of the widgets
         FragmentCharacterDetailBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_character_detail, container, false);
         binding.setCharacter(character);
 
@@ -98,26 +94,26 @@ public class CharacterDetailFragment extends BaseFragment implements CharacterDe
 
     @Override
     public void mapFullCharacter(SwCharacter character) {
-        mapList(llStarships, character.getStarshipsElement());
-        mapList(llVehicles, character.getVehiclesElement());
-        mapList(llFilms, character.getFilmsElement());
+        mapCombinedList(character.getCombineList());
         kvHomeworld.setValue(character.getHomeworldElement().getDisplayableName());
-        kvSpecie.setValue(character.getSpeciesElement().get(0).getDisplayableName());
-    }
-
-    private void mapList(LinearLayout layout, List<SwGenericElement> elementList) {
-        for (SwElement swElement : elementList) {
-            final TextView textView = (TextView) LayoutInflater.from(getContext()).inflate(R.layout.item_basic_text, null);
-            textView.setText(swElement.getDisplayableName());
-            layout.addView(textView);
-        }
     }
 
     public void mapHomeworld(SwElement homeworld) {
         kvHomeworld.setValue(homeworld.getDisplayableName());
     }
 
-    public void mapSpecie(SwElement specie) {
-        kvSpecie.setValue(specie.getDisplayableName());
+    @Override
+    public void mapCombinedList(List<List<SwGenericElement>> combinedList) {
+        for (List<SwGenericElement> swGenericElements : combinedList) {
+            //we handle the specific case of the Homeworld which should not be displayed in a list
+            if (swGenericElements.get(0).getType().equals("planets")){
+                mapHomeworld(swGenericElements.get(0));
+                continue;
+            }
+
+            //all other types should be handled as lists. The specific case of Species could be handled too, but the api returns them as list so... =)
+            final GenericElementsList elementListView = new GenericElementsList(getContext(), swGenericElements);
+            llMain.addView(elementListView);
+        }
     }
 }

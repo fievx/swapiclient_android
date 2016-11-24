@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="@dimen/cardview_default_elevation"
+    app:cardUseCompatPadding="true"
+    android:layout_marginTop="@dimen/margin_content_areas_spacing">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/padding_inside_card_view"
+        android:paddingRight="@dimen/padding_inside_card_view">
+
+        <TextView
+            style="@style/TextView"
+            android:textAppearance="@style/Text_Key"
+            android:id="@+id/tv_label" />
+
+        <!--<com.swapiclient.custom_views.LabelledDivider-->
+        <!--style="@style/LabelledDivider"-->
+        <!--android:id="@+id/divider"-->
+        <!--/>-->
+
+        <LinearLayout
+            style="@style/LinearLayout_as_list"
+            android:id="@+id/ll_elements" />
+
+    </LinearLayout>
+</android.support.v7.widget.CardView>

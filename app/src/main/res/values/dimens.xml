@@ -9,4 +9,5 @@
     
     <dimen name="margin_activity_border">16dp</dimen>
     <dimen name="margin_content_areas_spacing">8dp</dimen>
+    <dimen name="padding_inside_card_view">7dp</dimen>
 </resources>

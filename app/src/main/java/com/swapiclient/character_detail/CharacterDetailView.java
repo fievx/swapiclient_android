@@ -14,4 +14,5 @@ import java.util.List;
 public interface CharacterDetailView extends ActivityView {
 
     void mapFullCharacter(SwCharacter character);
+    void mapCombinedList(List<List<SwGenericElement>> combinedList);
 }

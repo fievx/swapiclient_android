@@ -2,9 +2,14 @@ package com.swapiclient.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.text.TextUtils;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.abego.treelayout.internal.util.java.util.ListUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -36,11 +41,10 @@ public class SwCharacter implements Parcelable, SwElement {
     @SerializedName("starships")
     private List<String> starshipsUrls;
     private List<SwGenericElement> filmsElement, speciesElement, vehiclesElement, starshipsElement;
+    private List<List<SwGenericElement>> combineList;
     //</editor-fold>
 
     //<editor-fold desc="Getters - Setters">
-
-
     public SwGenericElement getHomeworldElement() {
         return homeworldElement;
     }
@@ -209,6 +213,15 @@ public class SwCharacter implements Parcelable, SwElement {
         this.vehiclesElement = vehiclesElement;
     }
 
+    public List<List<SwGenericElement>> getCombineList() {
+        return combineList;
+    }
+
+    public void setCombineList(List<List<SwGenericElement>> combineList) {
+        this.combineList = combineList;
+    }
+
+
     //</editor-fold>
 
     public SwCharacter() {
@@ -219,8 +232,34 @@ public class SwCharacter implements Parcelable, SwElement {
         return name;
     }
 
-    //<editor-fold desc="Parcelable impl">
+    /**
+     * return all non null, non empty lists of fetchable elements (ie: vehicles, films...)
+     * @return
+     */
+    public List<List<String>> getAllFetchableList (){
+        List<List<String>> list = new ArrayList<>();
+        if (isListNotEmpty(vehiclesUrls))
+            list.add(vehiclesUrls);
+        if (isListNotEmpty(filmUrls))
+            list.add(filmUrls);
+        if (isListNotEmpty(speciesUrls))
+            list.add(speciesUrls);
+        if (isListNotEmpty(starshipsUrls))
+            list.add(starshipsUrls);
+        if(!TextUtils.isEmpty(homeworldUrl)){
+            final ArrayList homewoldList = new ArrayList();
+            homewoldList.add(homeworldUrl);
+            list.add(homewoldList);
+        }
 
+        return list;
+    }
+
+    private boolean isListNotEmpty (List list){
+        return list!=null && !list.isEmpty();
+    }
+
+    //<editor-fold desc="Parcelable impl">
     @Override
     public int describeContents() {
         return 0;
@@ -249,6 +288,7 @@ public class SwCharacter implements Parcelable, SwElement {
         dest.writeTypedList(this.speciesElement);
         dest.writeTypedList(this.vehiclesElement);
         dest.writeTypedList(this.starshipsElement);
+        dest.writeList(this.combineList);
     }
 
     protected SwCharacter(Parcel in) {
@@ -273,6 +313,8 @@ public class SwCharacter implements Parcelable, SwElement {
         this.speciesElement = in.createTypedArrayList(SwGenericElement.CREATOR);
         this.vehiclesElement = in.createTypedArrayList(SwGenericElement.CREATOR);
         this.starshipsElement = in.createTypedArrayList(SwGenericElement.CREATOR);
+        this.combineList = new ArrayList<List<SwGenericElement>>();
+        in.readList(this.combineList, List.class.getClassLoader());
     }
 
     public static final Creator<SwCharacter> CREATOR = new Creator<SwCharacter>() {
@@ -286,5 +328,7 @@ public class SwCharacter implements Parcelable, SwElement {
             return new SwCharacter[size];
         }
     };
+
     //</editor-fold>
+
 }
