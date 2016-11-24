@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.swapiclient.BaseActivity;
@@ -46,6 +47,14 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
         presenter.onCreate(savedInstanceState);
 
         setSupportActionBar(toolbar);
+        //we display a back arrow on the toolbar
+        toolbar.setNavigationIcon(com.utils.R.drawable.ic_arrow_back_white_24dp);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -71,5 +80,12 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
         transaction.add(R.id.character_detail_container, fragment, FRAGMENT_DETAIL);
         transaction.addToBackStack(null);
         transaction.commit();
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
