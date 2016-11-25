@@ -8,4 +8,8 @@ import com.mvpbase.presenters.ActivityPresenter;
 
 public interface CharacterDetailPresenter extends ActivityPresenter <CharacterDetailView> {
 
+    /**
+     * to be called when the view is ready to receive orders
+     */
+    void prepareElements();
 }

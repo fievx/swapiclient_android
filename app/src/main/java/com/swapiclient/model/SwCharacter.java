@@ -233,7 +233,9 @@ public class SwCharacter implements Parcelable, SwElement {
     }
 
     /**
-     * return all non null, non empty lists of fetchable elements (ie: vehicles, films...)
+     * return all non null, non empty lists of fetchable elements (ie: vehicles, films...). This method
+     * should return everything that is fetchable, even if not part of a list like Homeworld. This way,
+     * everything can be fetched at once using the Zip method.
      * @return
      */
     public List<List<String>> getAllFetchableList (){

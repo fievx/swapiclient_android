@@ -26,7 +26,7 @@ import butterknife.Unbinder;
 /**
  * A fragment representing a single SwCharacter detail screen.
  */
-public class CharacterDetailFragment extends BaseFragment implements CharacterDetailView {
+public class CharacterDetailFragment extends BaseFragment <CharacterDetailPresenter> implements CharacterDetailView {
 
     //<editor-fold desc="Binds">
     LinearLayout llFilms;
@@ -77,6 +77,8 @@ public class CharacterDetailFragment extends BaseFragment implements CharacterDe
         View rootView = binding.getRoot();
         unbinder = ButterKnife.bind(this, rootView);
 
+        presenter.prepareElements();
+
         return rootView;
     }
 
@@ -95,7 +97,6 @@ public class CharacterDetailFragment extends BaseFragment implements CharacterDe
     @Override
     public void mapFullCharacter(SwCharacter character) {
         mapCombinedList(character.getCombineList());
-        kvHomeworld.setValue(character.getHomeworldElement().getDisplayableName());
     }
 
     public void mapHomeworld(SwElement homeworld) {

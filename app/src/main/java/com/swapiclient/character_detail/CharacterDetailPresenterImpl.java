@@ -38,16 +38,24 @@ public class CharacterDetailPresenterImpl extends BasePresenter <CharacterDetail
         if (savedInstanceState!=null){
             characterBasic = savedInstanceState.getParcelable(CHARACTER_BASIC);
             characterComplete = savedInstanceState.getParcelable(CHARACTER_COMPLETE);
-            if (characterComplete==null){
-                fetchAllDetails();
-            }else {
-                view.mapFullCharacter(characterComplete);
-            }
-        }else {
-            fetchAllDetails();
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable(CHARACTER_BASIC, characterBasic);
+        outState.putParcelable(CHARACTER_COMPLETE, characterComplete);
+    }
+
+    @Override
+    public void prepareElements() {
+        if (characterComplete==null){
+            fetchAllDetails();
+        }else {
+            view.mapFullCharacter(characterComplete);
+        }
+    }
 
     /**
      * this is the method where we merge all the api calls into the existing SwCharacter before displaying it.

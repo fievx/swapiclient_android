@@ -76,9 +76,11 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (!isTablet){
             transaction.setCustomAnimations(com.utils.R.anim.enter_from_right, 0, 0, com.utils.R.anim.exit_to_right);
+            transaction.addToBackStack(null);
         }
-        transaction.add(R.id.character_detail_container, fragment, FRAGMENT_DETAIL);
-        transaction.addToBackStack(null);
+
+        //we use replace instead of simply add to avoid creating a stack of detail fragments in tablet mode
+        transaction.replace(R.id.character_detail_container, fragment, FRAGMENT_DETAIL);
         transaction.commit();
 
 

@@ -1,5 +1,6 @@
 package com.swapiclient;
 
+import com.mvpbase.presenters.ActivityPresenter;
 import com.mvpbase.views.fragments.BaseMvpFragment;
 import com.utils.ProgressDialogHelper;
 
@@ -7,7 +8,7 @@ import com.utils.ProgressDialogHelper;
  * Created by Jeremy on 17/11/2016.
  */
 
-public abstract class BaseFragment extends BaseMvpFragment {
+public abstract class BaseFragment <T extends ActivityPresenter> extends BaseMvpFragment <T> {
 
     @Override
     public void showProgressView() {
