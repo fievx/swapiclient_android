@@ -6,7 +6,7 @@ package com.swapiclient;
 
 public class Constants {
 
-    public static String ENDPOINT = "http://swapi.co/api/";
+    public static final String ENDPOINT = "http://swapi.co/api/";
 
-
+    public static final String PREFERENCE_THEME_SW = "PREFERENCE_THEME_SW";
 }

@@ -57,10 +57,14 @@ class CharacterListPresenterImpl extends BasePresenter <CharacterListView> imple
     public void loadNextPage() {
         if (!lastPageLoaded) { //Load another page only if we are not already on the last one
             currentPage++;
+            if (currentPage==1)
+                view.showProgressView();
             new SwapiClient().getCharacterListAtPage(currentPage)
                     .subscribe(new Consumer<ListApiResponse<SwCharacter>>() {
                         @Override
                         public void accept(ListApiResponse<SwCharacter> characterListApiResponse) throws Exception {
+                            view.hideProgressView();
+
                             //check if last page
                             lastPageLoaded = characterListApiResponse.getNext()==null;
 

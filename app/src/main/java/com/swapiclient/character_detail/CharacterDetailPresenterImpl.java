@@ -61,6 +61,8 @@ public class CharacterDetailPresenterImpl extends BasePresenter <CharacterDetail
      * this is the method where we merge all the api calls into the existing SwCharacter before displaying it.
      */
     private void fetchAllDetails(){
+        view.showProgressView();
+
         //We add to the list of methods to call only those really needed to avoid fails while fetching items
         //if we try to fetch elements that the character does not have, the Api fails.
         final List<List<String>> fetchableLists = characterBasic.getAllFetchableList();
@@ -91,6 +93,7 @@ public class CharacterDetailPresenterImpl extends BasePresenter <CharacterDetail
         ).subscribe(new Consumer<List<List<SwGenericElement>>>() {
             @Override
             public void accept(List<List<SwGenericElement>> combinedList) throws Exception {
+                view.hideProgressView();
                 view.mapCombinedList(combinedList);
                 if (characterComplete==null)
                     characterComplete = new SwCharacter();

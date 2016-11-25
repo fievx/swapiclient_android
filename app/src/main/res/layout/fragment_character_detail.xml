@@ -6,10 +6,9 @@
             name="character"
             type="com.swapiclient.model.SwCharacter"/>
     </data>
-
     <ScrollView android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
+        android:background="?android:attr/windowBackground"
         android:clickable="true">
 
         <LinearLayout
@@ -18,6 +17,7 @@
             android:orientation="vertical"
             android:layout_marginLeft="@dimen/margin_activity_border"
             android:layout_marginRight="@dimen/margin_activity_border"
+            android:paddingBottom="@dimen/margin_content_areas_spacing"
             android:id="@+id/ll_main">
 
             <android.support.v7.widget.CardView
