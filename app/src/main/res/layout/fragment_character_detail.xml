@@ -17,6 +17,7 @@
             android:orientation="vertical"
             android:layout_marginLeft="@dimen/margin_activity_border"
             android:layout_marginRight="@dimen/margin_activity_border"
+            android:paddingBottom="@dimen/margin_content_areas_spacing"
             android:id="@+id/ll_main">
 
             <android.support.v7.widget.CardView
