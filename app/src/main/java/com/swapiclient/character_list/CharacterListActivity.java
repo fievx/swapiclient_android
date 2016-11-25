@@ -76,6 +76,7 @@ public class CharacterListActivity extends BaseActivity <CharacterListPresenter>
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         if (!isTablet){
             transaction.setCustomAnimations(com.utils.R.anim.enter_from_right, 0, 0, com.utils.R.anim.exit_to_right);
+            // we add to back stack only in portrait mode to
             transaction.addToBackStack(null);
         }
 
