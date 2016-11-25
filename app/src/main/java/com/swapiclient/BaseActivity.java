@@ -2,6 +2,7 @@ package com.swapiclient;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.preference.PreferenceManager;
 
 import com.mvpbase.presenters.ActivityPresenter;
 import com.mvpbase.views.activities.MvpBaseActivity;
@@ -20,9 +21,15 @@ public abstract class BaseActivity <T extends ActivityPresenter> extends MvpBase
     protected boolean isTablet;
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+    public void onCreate(Bundle savedInstanceState) {
         isTablet = getResources().getBoolean(R.bool.isTablet);
-        super.onCreate(savedInstanceState, persistentState);
+
+        //we define the theme to be used
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(Constants.PREFERENCE_THEME_SW, false))
+            setTheme(R.style.AppTheme_Sw);
+
+        super.onCreate(savedInstanceState);
+
     }
 
     @Override

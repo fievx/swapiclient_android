@@ -8,10 +8,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/character_list"
         android:name="com.swapiclient.CharacterListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
+        style="@style/RecyclerView"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.swapiclient.character_list.CharacterListActivity"
         tools:listitem="@layout/item_character" />

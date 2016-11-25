@@ -6,10 +6,9 @@
             name="character"
             type="com.swapiclient.model.SwCharacter"/>
     </data>
-
     <ScrollView android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
+        android:background="?android:attr/windowBackground"
         android:clickable="true">
 
         <LinearLayout

@@ -8,4 +8,9 @@
         <attr name="key" format="string"/>
         <attr name="value" format="string"/>
     </declare-styleable>
+
+    <!--Theme attributes-->
+    <attr name="text_highlight_color" format="color"/>
+    <attr name="card_background" format="color|reference"/>
+    <attr name="key_text_color" format="color"/>
 </resources>

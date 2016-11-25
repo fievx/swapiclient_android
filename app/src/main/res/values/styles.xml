@@ -6,6 +6,33 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse</item>
+        <item name="android:windowBackground">@color/background</item>
+
+        <item name="text_highlight_color">@color/textColorPrimary</item>
+    </style>
+
+    <style name="AppTheme_Sw" parent="Theme.AppCompat">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/textColorPrimary_sw</item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+
+        <item name="android:textColorPrimary">@color/textColorPrimary_sw</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary_sw</item>
+        <item name="android:textColorPrimaryInverse">@color/textColorPrimaryInverse_sw</item>
+        <item name="android:textColorSecondaryInverse">@color/textColorSecondaryInverse_sw</item>
+        <item name="android:windowBackground">@drawable/stars_background</item>
+
+        <!--We use a custom attribute for the highlight colors since material attr are too confusing-->
+        <item name="text_highlight_color">@color/sw_blue</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -30,9 +57,8 @@
 
     </style>
 
-    <style name="TextView_Label" parent="TextAppearance.AppCompat.Small">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="Text_Highlight" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textColor">?attr/text_highlight_color</item>
     </style>
 
     <style name="KeyValue">
@@ -54,6 +80,15 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/margin_content_areas_spacing</item>
+    </style>
+
+    <style name="RecyclerView">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginBottom">@dimen/margin_content_areas_spacing</item>
+        <item name="android:layout_marginTop">@dimen/margin_content_areas_spacing</item>
+        <item name="android:layout_marginLeft">@dimen/margin_activity_border</item>
+        <item name="android:layout_marginRight">@dimen/margin_activity_border</item>
     </style>
 
 </resources>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <variable
@@ -11,7 +12,6 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="4dp"
         card_view:cardUseCompatPadding="true"
         android:clickable="true">
 
@@ -25,9 +25,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:textAppearance="?attr/textAppearanceListItem"
+                android:textAppearance="?attr/textAppearanceListItemSmall"
+                android:textColor="?android:attr/textColorSecondary"
                 android:layout_alignParentRight="true"
-                android:text="@{character.gender}" />
+                android:text="@{character.gender}"
+                tools:text="Male"/>
 
             <TextView
                 android:id="@+id/tv_name"
@@ -37,7 +39,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_margin="@dimen/text_margin"
                 android:textAppearance="?attr/textAppearanceListItem"
-                android:text="@{character.name}" />
+                android:text="@{character.name}"
+                tools:text="Han Solo"/>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

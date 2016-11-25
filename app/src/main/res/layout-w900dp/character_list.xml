@@ -22,10 +22,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/character_list"
         android:name="com.swapiclient.CharacterListFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/margin_activity_border"
-        android:layout_marginRight="@dimen/margin_activity_border"
+        style="@style/RecyclerView"
         android:layout_weight="2"
         app:layoutManager="LinearLayoutManager"
         tools:context="com.swapiclient.character_list.CharacterListActivity"
@@ -41,7 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/select_character"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+            android:textAppearance="@style/Text_Highlight"
             android:layout_margin="@dimen/margin_activity_border"/>
 
         <FrameLayout
